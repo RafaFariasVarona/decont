@@ -1,7 +1,7 @@
 #Download all the files specified in data/urls
-for url in $(cat data/urls) #TODO
+for url in $(cat ~/decont/data/urls) #TODO
 do
-    bash scripts/download.sh $url data
+    bash ~/decont/scripts/download.sh $url data
 done
 
 # Download the contaminants fasta file, uncompress it, and

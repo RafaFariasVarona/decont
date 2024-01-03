@@ -21,7 +21,7 @@ then
     url=$1
     destination_directory=$2
     echo "Downloading the sequencing data files..."
-    wget -O ${destination_directory}/file.tar.gz $url
+    wget -P ~/decont/${destination_directory} $url
 else
     echo "Usage: $0 <url>"
     exit 1

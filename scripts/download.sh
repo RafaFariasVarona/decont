@@ -16,7 +16,7 @@
 #   CCAGGATTTACAGACTTTAAA
 #
 #   If $4 == "another" only the **first two sequence** should be output
-if [ "$#" -ne 0 ]
+if [ "$#" -eq 2 ]
 then
     url=$1
     destination_directory=$2

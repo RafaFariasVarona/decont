@@ -16,3 +16,14 @@
 #   CCAGGATTTACAGACTTTAAA
 #
 #   If $4 == "another" only the **first two sequence** should be output
+if [ "$#" -ne 0 ]
+then
+    url=$1
+    destination_directory=$2
+    echo "Downloading the sequencing data files..."
+    wget -O ${destination_directory}/file.tar.gz $url
+else
+    echo "Usage: $0 <url>"
+    exit 1
+fi
+    

@@ -23,7 +23,7 @@ then
     echo "Downloading the sequencing data files..."
     wget -P ~/decont/${destination_directory} $url
 else
-    echo "Usage: $0 <url>"
+    echo "Usage: $0 <url and destination directory>"
     exit 1
 fi
     

@@ -9,12 +9,12 @@
 #bash ~/decont/scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes #TODO
 
 # Index the contaminants file
-bash ~/decont/scripts/index.sh ~/decont/res/filtered_contaminants.fasta ~/decont/res/contaminants_idx
+#bash ~/decont/scripts/index.sh res/filtered_contaminants.fasta res/contaminants_idx
 
 # Merge the samples into a single file
-for sid in $(<list_of_sample_ids>) #TODO
+for sid in $(ls ../data/*.fastq.gz | cut -d"-" -f1 | sed "s:../data/::" | sort | uniq) #TODO
 do
-    bash scripts/merge_fastqs.sh data out/merged $sid
+    bash ~/decont/scripts/merge_fastqs.sh data out/merged $sid
 done
 
 # TODO: run cutadapt for all merged files

@@ -18,7 +18,7 @@
 #   If $4 == "another" only the **first two sequence** should be output
 if [ "$#" -lt 2 ]
 then
-    echo "Usage: $0 <url and destination directory>"
+    echo "Usage: $0 <url> <destination directory>"
     exit 1
 fi
 

@@ -1,25 +1,36 @@
 #Download all the files specified in data/urls
-#for url in $(cat ~/decont/data/urls) #TODO
+#echo "Downloading the sequencing data files..."
+#for url in $(cat ~/decont/data/urls)
 #do
   #  bash ~/decont/scripts/download.sh $url data
 #done
 
 # Download the contaminants fasta file, uncompress it, and
 # filter to remove all small nuclear RNAs
-#bash ~/decont/scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes #TODO
+#echo "Downloading the contaminants database and filtering it..."
+#bash ~/decont/scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes
 
 # Index the contaminants file
+#echo "Indexing the contaminants database..."
 #bash ~/decont/scripts/index.sh res/filtered_contaminants.fasta res/contaminants_idx
 
 # Merge the samples into a single file
-for sid in $(ls ../data/*.fastq.gz | cut -d"-" -f1 | sed "s:../data/::" | sort | uniq) #TODO
-do
-    bash ~/decont/scripts/merge_fastqs.sh data out/merged $sid
-done
+#echo "Merging the fastqs from the same sample into a single file..."
+#for sid in $(ls ../data/*.fastq.gz | cut -d"-" -f1 | sed "s:../data/::" | sort | uniq)
+#do
+#    bash ~/decont/scripts/merge_fastqs.sh data out/merged $sid
+#done
 
 # TODO: run cutadapt for all merged files
-# cutadapt -m 18 -a TGGAATTCTCGGGTGCCAAGG --discard-untrimmed \
-#     -o <trimmed_file> <input_file> > <log_file>
+echo "Running cutadapt..."
+mamba install -y cutadapt
+mkdir -p ~/decont/log/cutadapt
+mkdir -p ~/decont/out/trimmed
+for sid in $(ls ../data/*.fastq.gz | cut -d"-" -f1 | sed "s:../data/::" | sort | uniq)
+do
+    cutadapt -m 18 -a TGGAATTCTCGGGTGCCAAGG --discard-untrimmed \
+-o ~/decont/out/trimmed/${sid}.trimmed.fastq.gz ~/decont/out/merged/${sid}.fastq.gz > ~/decont/log/cutadapt/${sid}.log
+done
 
 # TODO: run STAR for all trimmed files
 for fname in out/trimmed/*.fastq.gz

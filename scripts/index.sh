@@ -3,6 +3,8 @@
 
 # The STAR command is provided for you. You should replace the parts surrounded
 # by "<>" and uncomment it.
-
-# STAR --runThreadN 4 --runMode genomeGenerate --genomeDir <outdir> \
-# --genomeFastaFiles <genomefile> --genomeSAindexNbases 9
+mamba install -y star
+genomefile=$1
+outdir=$2
+STAR --runThreadN 4 --runMode genomeGenerate --genomeDir $outdir \
+--genomeFastaFiles $genomefile --genomeSAindexNbases 9

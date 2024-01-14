@@ -1,15 +1,15 @@
 #Download all the files specified in data/urls
-for url in $(cat ~/decont/data/urls) #TODO
-do
-    bash ~/decont/scripts/download.sh $url data
-done
+#for url in $(cat ~/decont/data/urls) #TODO
+#do
+  #  bash ~/decont/scripts/download.sh $url data
+#done
 
 # Download the contaminants fasta file, uncompress it, and
 # filter to remove all small nuclear RNAs
-bash ~/decont/scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes #TODO
+#bash ~/decont/scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes #TODO
 
 # Index the contaminants file
-bash scripts/index.sh res/contaminants.fasta res/contaminants_idx
+bash ~/decont/scripts/index.sh ~/decont/res/filtered_contaminants.fasta ~/decont/res/contaminants_idx
 
 # Merge the samples into a single file
 for sid in $(<list_of_sample_ids>) #TODO

@@ -22,25 +22,24 @@
 #done
 
 # TODO: run cutadapt for all merged files
-echo "Running cutadapt..."
-mamba install -y cutadapt
-mkdir -p ~/decont/log/cutadapt
-mkdir -p ~/decont/out/trimmed
-for sid in $(ls ../data/*.fastq.gz | cut -d"-" -f1 | sed "s:../data/::" | sort | uniq)
-do
-    cutadapt -m 18 -a TGGAATTCTCGGGTGCCAAGG --discard-untrimmed \
--o ~/decont/out/trimmed/${sid}.trimmed.fastq.gz ~/decont/out/merged/${sid}.fastq.gz > ~/decont/log/cutadapt/${sid}.log
-done
+#echo "Running cutadapt..."
+#mamba install -y cutadapt
+#mkdir -p ~/decont/log/cutadapt
+#mkdir -p ~/decont/out/trimmed
+#for sid in $(ls ../data/*.fastq.gz | cut -d"-" -f1 | sed "s:../data/::" | sort | uniq)
+#do
+#    cutadapt -m 18 -a TGGAATTCTCGGGTGCCAAGG --discard-untrimmed \
+#    -o ~/decont/out/trimmed/${sid}.trimmed.fastq.gz ~/decont/out/merged/${sid}.fastq.gz > ~/decont/log/cutadapt/${sid}.log
+#done
 
 # TODO: run STAR for all trimmed files
-for fname in out/trimmed/*.fastq.gz
+echo "Running star..."
+for sid in $(ls ../data/*.fastq.gz | cut -d"-" -f1 | sed "s:../data/::" | sort | uniq)
 do
-    # you will need to obtain the sample ID from the filename
-    sid=#TODO
-    # mkdir -p out/star/$sid
-    # STAR --runThreadN 4 --genomeDir res/contaminants_idx \
-    #    --outReadsUnmapped Fastx --readFilesIn <input_file> \
-    #    --readFilesCommand gunzip -c --outFileNamePrefix <output_directory>
+    mkdir -p ~/decont/out/star/$sid
+    STAR --runThreadN 4 --genomeDir ~/decont/res/contaminants_idx \
+         --outReadsUnmapped Fastx --readFilesIn ~/decont/out/trimmed/${sid}.trimmed.fastq.gz \
+         --readFilesCommand gunzip -c --outFileNamePrefix ~/decont/out/star/$sid/
 done 
 
 # TODO: create a log file containing information from cutadapt and star logs

@@ -48,13 +48,9 @@ done
 # - star: Percentages of uniquely mapped reads, reads mapped to multiple loci, and to too many loci
 # tip: use grep to filter the lines you're interested in
 touch ~/decont/log/pipeline.log
-#CUTADAPT LOG
-for cutadaptlog in $(ls ../log/cutadapt/*.log | sed "s:../log/cutadapt/::")
+for sid in $(ls ../data/*.fastq.gz | cut -d"-" -f1 | sed "s:../data/::" | sort | uniq)
 do
-    grep -E "Reads with adapters|Total basepairs processed" ~/decont/log/cutadapt/$cutadaptlog >> ~/decont/log/pipeline.log
-done
-#STAR LOG
-for starlog in $(ls ../out/star/)
-do
-    grep -E "Uniquely mapped reads %|% of reads mapped to multiple loci|% of reads mapped to too many loci" ~/decont/out/star/$starlog/Log.final.out | sed -e 's/^ *//' -e 's/ |/:/' >> ~/decont/log/pipeline.log
+    echo "$sid" >> ~/decont/log/pipeline.log
+    grep -E "Reads with adapters|Total basepairs processed" ~/decont/log/cutadapt/${sid}.log | sed 's/: */: /' >> ~/decont/log/pipeline.log
+    grep -E "Uniquely mapped reads %|% of reads mapped to multiple loci|% of reads mapped to too many loci" ~/decont/out/star/$sid/Log.final.out | sed -e 's/^ *//' -e 's/ |/:/' -e 's/\t/ /' >> ~/decont/log/pipeline.log
 done

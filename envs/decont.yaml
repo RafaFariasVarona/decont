@@ -1,0 +1,10 @@
+name: entregablefinal
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - star
+  - cutadapt
+  - ca-certificates
+  - openssl
+prefix: /home/vant/miniforge3/envs/entregablefinal
